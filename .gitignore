@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.claude/settings.local.json
+backup_20260529/
+Model_comparisons/
+Model_comparisons_v2/
+mao_plots/
+plots/
+img*.png
+*.ipynb
+*.docx
+*.xlsx
+inverse_results/
+mao_analysis.py
+project_plan.md
