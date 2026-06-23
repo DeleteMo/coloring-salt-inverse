@@ -12,10 +12,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 print("读取实验数据.xlsx...")
 
 # 读取数据 - 使用header=1 (row 1是header, row 0是title)
-df = pd.read_excel(r'实验数据.xlsx', header=1)
+df = pd.read_excel(os.path.join(BASE_DIR, '实验数据.xlsx'), header=1)
 print(f"数据形状: {df.shape}")
 
 # 实验数据.xlsx列结构 (使用header=1后):

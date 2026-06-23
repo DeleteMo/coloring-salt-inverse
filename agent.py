@@ -2,11 +2,13 @@
 本地 Ollama Agent - 集成到Streamlit
 提供自然语言交互：颜色查询、配方优化、公式分析
 """
-import json
+import json, os
 import requests
 from inverse_utils import initialize as init_forward, get_feature_names, predict_Lab
 from inverse_nearest import init as init_inverse, optimize as optimize_nearest
 import numpy as np
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 OLLAMA_URL = "http://localhost:11434"
 MODEL = "qwen2.5:7b"  # 默认使用 qwen2.5 7B，支持中文
@@ -75,7 +77,7 @@ def tool_analyze_feature(feature_name):
         return {"error": f"未知成分: {feature_name}"}
 
     import pandas as pd
-    df = pd.read_excel('实验数据.xlsx', header=1)
+    df = pd.read_excel(os.path.join(BASE_DIR, '实验数据.xlsx'), header=1)
     col = df[feature_name]
     vals = pd.to_numeric(col.values, errors='coerce')
     vals = vals.dropna()

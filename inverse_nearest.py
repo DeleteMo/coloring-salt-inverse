@@ -2,16 +2,18 @@
 基于最近邻初始化的逆向优化
 输入Lab → 数据中找最接近的Lab → 以其配方为基础微调参数
 """
-import pandas as pd, numpy as np, joblib
+import pandas as pd, numpy as np, joblib, os
 from scipy.optimize import differential_evolution
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 _rf, _X, _Lab = None, None, None
 
 def init():
     global _rf, _X, _Lab
     if _rf is not None: return
-    _rf = joblib.load('models/rf_model_new.joblib')
-    df = pd.read_excel('实验数据.xlsx', header=1)
+    _rf = joblib.load(os.path.join(BASE_DIR, 'models', 'rf_model_new.joblib'))
+    df = pd.read_excel(os.path.join(BASE_DIR, '实验数据.xlsx'), header=1)
     fc = df.columns[2:62].tolist()
     X = np.array([pd.to_numeric(df[c].values, errors='coerce') for c in fc]).T
     X = np.nan_to_num(X)
@@ -76,7 +78,7 @@ def optimize(tL, ta, tb):
 
 if __name__ == '__main__':
     init()
-    cp = joblib.load('cluster_models/cluster_prior_formula.joblib')
+    cp = joblib.load(os.path.join(BASE_DIR, 'cluster_models', 'cluster_prior_formula.joblib'))
 
     print('='*70)
     print('基于最近邻的逆向优化测试')
